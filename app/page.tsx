@@ -1,8 +1,11 @@
 import HeroCarousel from "@/components/HeroCarousel";
 import Searchbar from "@/components/Searchbar";
 import Image from "next/image";
+import { getAllProducts } from "@/lib/action";
+import ProductCard from "@/components/ProductCard";
 
-const Home = () => {
+const Home = async () => {
+  const allProducts = await getAllProducts();
   return (
     <>
       <section className="px-6 md:px-20 py-24  ">
@@ -22,19 +25,18 @@ const Home = () => {
               <span className="text-primary"> Price Analysis</span>
             </h1>
             <p className="mt-6">
-              Smart Shopping helps you to find the best price for your
-              products.
+              Smart Shopping helps you to find the best price for your products.
             </p>
             <Searchbar />
           </div>
-          <HeroCarousel/>
+          <HeroCarousel />
         </div>
       </section>
       <section className="trending-section">
         <h2 className="section-text">Trending</h2>
         <div className="flex flex-wrap gap-x-8 gap-y-16">
-          {['Apple Iphone 15','Book','Sneaker'].map((product)=>(
-            <div>{product}</div>
+          {allProducts?.map((product) => (
+            <ProductCard key={product._d} product={product} />
           ))}
         </div>
       </section>
